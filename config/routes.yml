@@ -1,0 +1,147 @@
+static:
+  sri-assets:
+    path: /sri-reg/assets
+    target: ../assets
+  inac-assets:
+    path: /inac/assets
+    target: ../assets
+
+issuers:
+  SRI-REG:
+    path: /sri-reg
+  SRI-INAC:
+    path: /inac
+
+forms:
+  women-owned:
+    path: /sri-reg/women-owned
+    type: submit-credential
+    schema_name: pspc-sri.women-owned-supplier
+    page_title: Women-Owned Supplier
+    title: Woman-Owned Business Certification
+    template: sri.index.html
+    description: "Use the form below to obtain a Women-Owned Business Certification for your business."
+    explanation: ""
+
+    proof_request:
+      name: sri-registration
+      filters:
+        legal_entity_id: org_id
+
+    js_includes:
+      - src: js/sri.js
+
+    hidden:
+      - legal_entity_id
+
+    fields:
+      - name: contact_first_name
+        label: Contact First Name
+        type: text
+        required: true
+
+      - name: contact_last_name
+        label: Contact Last Name
+        type: text
+        required: true
+
+      - name: contact_email_address
+        label: Contact Email Address
+        type: email
+        required: true
+
+      - name: contact_phone_number
+        label: Contact Phone Number
+        type: phone
+        required: true
+
+      - name: legal_name
+        label: Legal Name
+        type: text
+        required: true
+
+      - name: address
+        label: Mailing Address
+        type: address
+        required: true
+
+    mapping:
+      attributes:
+        - name: status
+          from: literal
+          source: Active
+
+        - name: effective_date
+          from: helper
+          source: now
+
+        - name: end_date
+          from: literal
+          source: null
+
+
+  aboriginal-business:
+    path: /inac/aboriginal-business
+    type: submit-credential
+    schema_name: isc-inac.aboriginal-business
+    page_title: INAC
+    title: INAC Aboriginal Business Certification
+    template: sri.index.html
+    description: "Use the form below to obtain an Aboriginal Business Certification for your business."
+    explanation: ""
+
+    proof_request:
+      name: sri-registration
+      filters:
+        legal_entity_id: org_id
+
+    js_includes:
+      - src: js/sri.js
+
+    hidden:
+      - legal_entity_id
+
+    fields:
+      - name: contact_first_name
+        label: Contact First Name
+        type: text
+        required: true
+
+      - name: contact_last_name
+        label: Contact Last Name
+        type: text
+        required: true
+
+      - name: contact_email_address
+        label: Contact Email Address
+        type: email
+        required: true
+
+      - name: contact_phone_number
+        label: Contact Phone Number
+        type: phone
+        required: true
+
+      - name: legal_name
+        label: Legal Name
+        type: text
+        required: true
+
+      - name: address
+        label: Mailing Address
+        type: address
+        required: true
+
+    mapping:
+      attributes:
+        - name: status
+          from: literal
+          source: Active
+
+        - name: effective_date
+          from: helper
+          source: now
+
+        - name: end_date
+          from: literal
+          source: null

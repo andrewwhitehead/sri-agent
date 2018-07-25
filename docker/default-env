@@ -1,0 +1,13 @@
+TOB_INDY_SEED=sri-test_00000000000000000000000
+APPLICATION_URL=http://localhost:8090/sri/pub/proxy/agent
+BC_TOB_API_URL=http://localhost:8080/api
+BC_TOB_APP_URL=http://localhost:8080
+#TOB_API_URL=http://localhost:8086/api
+#TOB_APP_URL=http://localhost:8085
+#LEDGER_URL=http://159.89.125.134
+SRI_URL=https://localhost:8090
+WALLET_SEED_CISD=pspc-cisd-sri-test_0000000000000
+WALLET_SEED_INAC=aandc-inac-test_0000000000000000
+WALLET_SEED_PSPC=pspc-ab-sri-test_000000000000000
+#WEB_HTTP_PORT=8089
+#WEB_BASE_HREF=/vonx/

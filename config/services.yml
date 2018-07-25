@@ -1,0 +1,122 @@
+issuers:
+  SRI-REG:
+    jurisdiction:
+       name: Public Services and Procurement Canada
+       abbreviation: PSPC
+       # url: https://canada.ca/organizations/tpsgc-pspc
+
+    name: Acquisitions Branch
+    abbreviation: AB
+    url: "https://www.canada.ca/en/public-services-procurement.html"
+    email: sri.ab@example.ca
+
+    wallet:
+      seed: $WALLET_SEED_PSPC
+
+    credential_types:
+      - description: Vendor Credential
+        schema: pspc-sri.gc-vendor-credential
+        issuer_url: $APPLICATION_URL_REGISTER
+
+      - description: Green Supplier
+        schema: pspc-sri.green-supplier
+        issuer_url: $APPLICATION_URL_PSPC_GREEN
+
+      - description: Women-Owned Supplier
+        schema: pspc-sri.women-owned-supplier
+        issuer_url: $APPLICATION_URL_WOMEN_OWNED
+
+      - description: Vendor Performance Evaluation
+        schema: pspc-sri.gc-vendor-performance
+        issuer_url: $APPLICATION_URL_PSPC_PERF
+
+  SRI-CISD:
+    jurisdiction:
+      name: Public Services and Procurement Canada
+      abbreviation: PSPC
+
+    name: Canadian Industrial Security # Directorate
+    abbreviation: CISD
+    url: "https://www.tpsgc-pwgsc.gc.ca/esc-src/index-eng.html"
+    email: sri.cisd@example.ca
+
+    wallet:
+      seed: $WALLET_SEED_CISD
+
+    credential_types:
+      - description: Designated Organization Screening
+        schema: pspc-sri.designated-organization-screening
+        issuer_url: $APPLICATION_URL_CISC_DO
+
+      - description: Facility Security Clearance
+        schema: pspc-sri.facility-security-clearance
+        issuer_url: $APPLICATION_URL_CISC_FSC
+
+  SRI-INAC:
+    jurisdiction:
+      name:  Aboriginal Affairs and Northern Development Canada
+      abbreviation: AANDC
+      # url: http://www.aadnc-aandc.gc.ca
+
+    name: Indigenous and North. Affairs # Canada
+    abbreviation: INAC
+    url: "https://www.canada.ca/en/indigenous-northern-affairs.html"
+    email: sri.inac@example.ca
+
+    wallet:
+      seed: $WALLET_SEED_INAC
+
+    credential_types:
+      - description: Aboriginal Business
+        schema: isc-inac.aboriginal-business
+        issuer_url: $APPLICATION_URL_INAC
+
+
+proof_requests:
+  sri-registration:
+    version: '1.0.0'
+    filters:
+      - legal_entity_id
+    schemas:
+      - key:
+          name: pspc-sri.gc-vendor-credential
+          version: '1.0.5'
+        attributes:
+          - legal_entity_id
+          - sri_record_id
+          - status
+          - legal_name
+          - org_type
+          - addressee
+          - address_line_1
+          - address_line_2
+          - city
+          - province
+          - postal_code
+          - country
+          - effective_date
+          - end_date
+
+#  registration:
+#    url: $BC_TOB_API_URL
+#    version: '1.0.0'
+#    filters:
+#      - legal_entity_id
+#    schemas:
+#      - key:
+#          name: incorporation.bc_registries
+#          version: '1.0.31'
+#        attributes:
+#          - legal_entity_id
+#          - corp_num
+#          - legal_name
+#          - org_type
+#          - addressee
+#          - address_line_1
+#          - address_line_2
+#          - city
+#          - province
+#          - postal_code
+#          - country
+#          - effective_date
+#          - end_date

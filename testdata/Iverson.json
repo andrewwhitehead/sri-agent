@@ -1,0 +1,17 @@
+{
+  "schema": "pspc-sri.gc-vendor-credential",
+  "attributes": {
+    "legal_entity_id": "246801234",
+    "sri_record_id": "123459201",
+    "vendor_status": "active",
+    "legal_name": "Iverson Kitchen",
+    "org_type": "Corporation",
+    "addressee": "Iverson Kitchen",
+    "address_line_1": "123 Fake St",
+    "city": "Lazytown",
+    "province": "BC",
+    "postal_code": "K0A2N0",
+    "country": "CA",
+    "effective_date": "1520214531"
+  }
+}

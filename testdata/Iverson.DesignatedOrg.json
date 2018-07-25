@@ -1,0 +1,9 @@
+{
+  "schema": "pspc-sri.designated-organization-screening",
+  "attributes": {
+    "legal_entity_id": "246801234",
+    "type": "Personnel Assigned (PA)",
+    "status": "active",
+    "effective_date": "1520214531"
+    }
+}

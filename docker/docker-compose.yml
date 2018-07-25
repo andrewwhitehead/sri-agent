@@ -1,0 +1,41 @@
+version: '3'
+services:
+
+  sri-agent:
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile
+    environment:
+      APPLICATION_URL: ${APPLICATION_URL:-http://localhost:5000}
+      CONFIG_ROOT: ../config
+      ENVIRONMENT: ${ENVIRONMENT:-default}
+      ENABLE_GUNICORN: ${ENABLE_GUNICORN:-}
+      INDY_LEDGER_URL: ${LEDGER_URL:-http://localhost:9000}
+      FORMS: ${FORMS:-}
+      ISSUERS: ${ISSUERS:-}
+      LOG_LEVEL: ${LOG_LEVEL:-}
+      PYTHON_ENV: ${PYTHON_ENV:-development}
+      SRI_URL: ${SRI_URL:-}
+      TOB_API_URL: ${TOB_API_URL:-}
+      TOB_APP_URL: ${TOB_APP_URL:-}
+      TOB_INDY_DID: ${TOB_INDY_DID:-}
+      TOB_INDY_SEED: ${TOB_INDY_SEED:-}
+      WALLET_SEED_PSPC: ${WALLET_SEED_PSPC:-}
+      WALLET_SEED_CISD: ${WALLET_SEED_CISD:-}
+      WALLET_SEED_INAC: ${WALLET_SEED_INAC:-}
+      WEB_BASE_HREF: ${WEB_BASE_HREF:-/}
+    external_links:
+       - tob_tob-api_1:tob-api
+    networks:
+      - orgbook
+    volumes:
+      - sri-agent-wallet:/opt/app-root/src/.indy_client/wallet
+    ports:
+      - ${WEB_HTTP_PORT:-5000}:8000
+
+volumes:
+  sri-agent-wallet:
+networks:
+  orgbook:
+    external:
+      name: tob_tob
