@@ -56,7 +56,7 @@ $(function () {
       console.log('TheOrgBook URL: ', THE_ORG_BOOK_APP_URL)
       if(THE_ORG_BOOK_APP_URL && response.result && response.result.id) {
         window.location.replace(
-          THE_ORG_BOOK_APP_URL + '/en/recipe/start_a_restaurant?record=' +
+          THE_ORG_BOOK_APP_URL + '/en/recipe/sri_reg?record=' +
           response.result.id
         )
       }
