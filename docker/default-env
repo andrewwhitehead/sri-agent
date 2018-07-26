@@ -1,5 +1,10 @@
 TOB_INDY_SEED=sri-test_00000000000000000000000
-APPLICATION_URL=http://localhost:8090/sri/pub/proxy/agent
+
+# to pass through SRI
+#APPLICATION_URL=http://localhost:8090/sri/pub/proxy/agent
+
+APPLICATION_URL=http://localhost:5000
+
 BC_TOB_API_URL=http://localhost:8080/api
 BC_TOB_APP_URL=http://localhost:8080
 #TOB_API_URL=http://localhost:8086/api
