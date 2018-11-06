@@ -5,7 +5,7 @@ default:
   BC_TOB_API_URL: https://devex-von-test.pathfinder.gov.bc.ca/api
   BC_TOB_APP_URL: https://devex-von-test.pathfinder.gov.bc.ca
   TEMPLATE_PATH: ../templates
-  TOB_API_URL: http://tob-api:8080/api/v1
+  TOB_API_URL: http://tob-api:8080/api/v2
   TOB_APP_URL: http://localhost:8085
   WALLET_SEED_CISD: pspc-cisd-sri0000000000000000000
   WALLET_SEED_INAC: aandc-inac0000000000000000000000

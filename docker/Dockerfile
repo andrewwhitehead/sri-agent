@@ -1,11 +1,7 @@
 #FROM vonx-base
-FROM bcgovimages/von-image:py36-1.0rc3
+FROM bcgovimages/von-image:py36-1.6-ew-10
 
 WORKDIR $HOME
-
-#ADD --chown=indy:indy src/requirements.txt $HOME/src/
-#RUN pip --no-cache-dir install -r src/requirements.txt
-RUN pip install git+https://github.com/PSPC-SPAC-buyandsell/von-x.git@6f61af9c14885b9f31d6644e534381a04e8e6d97
 
 ADD --chown=indy:indy . $HOME
 

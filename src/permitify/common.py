@@ -23,7 +23,8 @@ to be properly initialized before the webserver process has forked.
 
 import logging.config
 
-from vonx.services import common, config
+from vonx.common import config
+from vonx.indy.manager import IndyManager
 from vonx.web import init_web
 
 
@@ -34,11 +35,11 @@ ENV = config.load_settings()
 LOG_CONFIG = config.load_config(ENV.get('LOG_CONFIG_PATH'))
 logging.config.dictConfig(LOG_CONFIG)
 
-MANAGER = common.StandardServiceManager(ENV)
+MANAGER = IndyManager(ENV)
 
 
 def pre_init():
-    MANAGER.start()
+    MANAGER.start_process()
 
 async def init_app():
     return await init_web(MANAGER)

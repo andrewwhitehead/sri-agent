@@ -14,28 +14,52 @@ services:
       FORMS: ${FORMS:-}
       ISSUERS: ${ISSUERS:-}
       LOG_LEVEL: ${LOG_LEVEL:-}
-      PYTHON_ENV: ${PYTHON_ENV:-development}
+      POSTGRESQL_WALLET_HOST: ${POSTGRESQL_WALLET_HOST}
+      POSTGRESQL_WALLET_PORT: ${POSTGRESQL_WALLET_PORT}
+      POSTGRESQL_WALLET_USER: ${POSTGRESQL_USER}
+      POSTGRESQL_WALLET_PASSWORD: ${POSTGRESQL_PASSWORD}
+      POSTGRESQL_WALLET_ADMIN_PASSWORD: ${POSTGRESQL_ADMIN_PASSWORD}
       SRI_URL: ${SRI_URL:-}
       TOB_API_URL: ${TOB_API_URL:-}
       TOB_APP_URL: ${TOB_APP_URL:-}
-      TOB_INDY_DID: ${TOB_INDY_DID:-}
-      TOB_INDY_SEED: ${TOB_INDY_SEED:-}
+      WALLET_ENCRYPTION_KEY: ${WALLET_ENCRYPTION_KEY}
       WALLET_SEED_PSPC: ${WALLET_SEED_PSPC:-}
       WALLET_SEED_CISD: ${WALLET_SEED_CISD:-}
       WALLET_SEED_INAC: ${WALLET_SEED_INAC:-}
+      WALLET_TYPE: ${WALLET_TYPE}
       WEB_BASE_HREF: ${WEB_BASE_HREF:-/}
     external_links:
-       - tob_tob-api_1:tob-api
+       - sritob_tob-api_1:tob-api
+    depends_on:
+        - sri-wallet-db
     networks:
-      - orgbook
-    volumes:
-      - sri-agent-wallet:/opt/app-root/src/.indy_client/wallet
+      - tob
     ports:
       - ${WEB_HTTP_PORT:-5000}:8000
+    entrypoint: >
+      /bin/bash -c "
+        echo sleeping ...;
+        sleep 5;
+        ../docker/docker-entrypoint.sh;"
+
+  sri-wallet-db:
+    image: registry.access.redhat.com/rhscl/postgresql-95-rhel7:9.5
+    environment:
+      - POSTGRESQL_USER=${POSTGRESQL_USER}
+      - POSTGRESQL_PASSWORD=${POSTGRESQL_PASSWORD}
+      - POSTGRESQL_DATABASE=${POSTGRESQL_DATABASE}
+      - POSTGRESQL_ADMIN_PASSWORD=${POSTGRESQL_ADMIN_PASSWORD}
+    networks:
+      - tob
+    ports:
+      - 5434:5432
+    volumes:
+      - wallet-db:/var/lib/pgsql/data
 
 volumes:
-  sri-agent-wallet:
+  wallet-db:
+
 networks:
-  orgbook:
+  tob:
     external:
-      name: tob_tob
+      name: sritob_tob

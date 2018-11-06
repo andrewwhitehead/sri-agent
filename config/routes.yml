@@ -15,7 +15,7 @@ issuers:
 forms:
   women-owned:
     path: /sri-reg/women-owned
-    type: submit-credential
+    type: issue-credential
     schema_name: pspc-sri.women-owned-supplier
     page_title: Women-Owned Supplier
     title: Woman-Owned Business Certification
@@ -82,7 +82,7 @@ forms:
 
   aboriginal-business:
     path: /inac/aboriginal-business
-    type: submit-credential
+    type: issue-credential
     schema_name: isc-inac.aboriginal-business
     page_title: INAC
     title: INAC Aboriginal Business Certification
