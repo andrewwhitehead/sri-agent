@@ -1,5 +1,5 @@
 issuers:
-  SRI-REG:
+  sri-reg:
     jurisdiction:
        name: Public Services and Procurement Canada
        abbreviation: PSPC
@@ -39,6 +39,9 @@ issuers:
           effective_date:
             input: effective_date
             from: claim
+          revoked_date:
+            input: end_date
+            from: claim
         topic:
           source_id:
             input: legal_entity_id
@@ -63,7 +66,7 @@ issuers:
               format:
                 input: category
                 from: value
-              text:
+              value:
                 input: status
                 from: claim
           - model: attribute
@@ -74,7 +77,7 @@ issuers:
               format:
                 input: category
                 from: value
-              text:
+              value:
                 input: org_type
                 from: claim
           - model: address
@@ -131,7 +134,7 @@ issuers:
             input: registration
             from: value
 
-  SRI-CISD:
+  sri-cisd:
     jurisdiction:
       name: Public Services and Procurement Canada
       abbreviation: PSPC
@@ -185,7 +188,7 @@ issuers:
             input: registration
             from: value
 
-  SRI-INAC:
+  sri-inac:
     jurisdiction:
       name:  Aboriginal Affairs and Northern Development Canada
       abbreviation: AANDC

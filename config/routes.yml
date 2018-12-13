@@ -6,12 +6,6 @@ static:
     path: /inac/assets
     target: ../assets
 
-issuers:
-  SRI-REG:
-    path: /sri-reg
-  SRI-INAC:
-    path: /inac
-
 forms:
   women-owned:
     path: /sri-reg/women-owned
