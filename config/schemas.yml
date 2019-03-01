@@ -1,20 +1,12 @@
 - name: pspc-sri.gc-vendor-credential
-  version: 1.0.5
+  version: 1.0.6
   attributes:
-    - legal_entity_id
-    - sri_record_id
-    - status
+    - supplier_id
     - legal_name
     - org_type
-    - addressee
-    - address_line_1
-    - address_line_2
-    - city
-    - province
-    - postal_code
-    - country
+    - status
+    - aboriginal_indicator
     - effective_date
-    - end_date
 
 - name: pspc-sri.green-supplier
   version: 1.0.0

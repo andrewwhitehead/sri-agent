@@ -1,12 +1,7 @@
 issuers:
   sri-reg:
-    jurisdiction:
-       name: Public Services and Procurement Canada
-       abbreviation: PSPC
-       # url: https://canada.ca/organizations/tpsgc-pspc
-
-    name: Acquisitions Branch
-    abbreviation: AB
+    name: Public Services and Procurement Canada
+    abbreviation: PSPC
     url: "https://www.canada.ca/en/public-services-procurement.html"
     email: sri.ab@example.ca
 
@@ -32,19 +27,16 @@ issuers:
         key_derivation_method: ARGON2I_MOD
 
     credential_types:
-      - description: Vendor Credential
+      - description: PSPC Supplier
         schema: pspc-sri.gc-vendor-credential
         issuer_url: $APPLICATION_URL_REGISTER
         credential:
           effective_date:
             input: effective_date
             from: claim
-          revoked_date:
-            input: end_date
-            from: claim
         topic:
           source_id:
-            input: legal_entity_id
+            input: supplier_id
             from: claim
           type:
             input: registration
@@ -80,25 +72,16 @@ issuers:
               value:
                 input: org_type
                 from: claim
-          - model: address
+          - model: attribute
             fields:
-              addressee:
-                input: addressee
-                from: claim
-              civic_address:
-                input: address_line_1
-                from: claim
-              city:
-                input: city
-                from: claim
-              province:
-                input: province
-                from: claim
-              postal_code:
-                input: postal_code
-                from: claim
-              country:
-                input: country
+              type:
+                input: aboriginal_indicator
+                from: value
+              format:
+                input: category
+                from: value
+              value:
+                input: aboriginal_indicator
                 from: claim
 
       - description: Green Supplier
@@ -135,10 +118,6 @@ issuers:
             from: value
 
   sri-cisd:
-    jurisdiction:
-      name: Public Services and Procurement Canada
-      abbreviation: PSPC
-
     name: Canadian Industrial Security # Directorate
     abbreviation: CISD
     url: "https://www.tpsgc-pwgsc.gc.ca/esc-src/index-eng.html"
@@ -189,11 +168,6 @@ issuers:
             from: value
 
   sri-inac:
-    jurisdiction:
-      name:  Aboriginal Affairs and Northern Development Canada
-      abbreviation: AANDC
-      # url: http://www.aadnc-aandc.gc.ca
-
     name: Indigenous and North. Affairs # Canada
     abbreviation: INAC
     url: "https://www.canada.ca/en/indigenous-northern-affairs.html"
