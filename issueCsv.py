@@ -27,13 +27,15 @@ import time
 
 import aiohttp
 
-DEFAULT_AGENT_URL = os.environ.get('AGENT_URL', 'http://localhost:5000/sri-reg')
+DEFAULT_AGENT_URL = os.environ.get('AGENT_URL', 'http://sri-agent:8000/sri-reg')
 
 parser = argparse.ArgumentParser(description='Issue one or more credentials via von-x')
 parser.add_argument('csv', help='the path to the csv file')
 parser.add_argument('-b', '--batch', type=int, default=0, help='credential request batch size')
 parser.add_argument('-p', '--parallel', action='store_true',
     help='submit the credentials in parallel')
+parser.add_argument('-m', '--max', type=int, default=None, help='max credentials to issue')
+parser.add_argument('-s', '--start', type=int, default=0, help='start index')
 parser.add_argument('-u', '--url', default=DEFAULT_AGENT_URL, help='the URL of the von-x service')
 
 args = parser.parse_args()
@@ -127,19 +129,18 @@ CRED = {
   }
 }
 FIELD_MAP = {
-  'legal_entity_id': 'PROCUREMENT_BUSINESS_NUMBER',
-  'sri_record_id': 'PROCUREMENT_BUSINESS_NUMBER',
   'legal_name': 'AS_TYPED_LEGAL_NAME',
   'status': 'STATUS_TYPE_CODE',
   'org_type': 'TYPE_OF_OWNERSHIP_CODE',
   #'addressee'
-  'address_line_1': 'ADDRESS_LINE_1',
-  'address_line_2': 'ADDRESS_LINE_2',
-  'city': 'CITY',
-  'province': 'PROVINCE_STATE_NAME_EN',
-  'postal_code': 'POSTAL_CODE',
-  'country': 'COUNTRY_CODE',
+  #'address_line_1': 'ADDRESS_LINE_1',
+  #'address_line_2': 'ADDRESS_LINE_2',
+  #'city': 'CITY',
+  #'province': 'PROVINCE_STATE_NAME_EN',
+  #'postal_code': 'POSTAL_CODE',
+  #'country': 'COUNTRY_CODE',
   #'end_date':
+  'aboriginal_indicator': 'ABORIGINAL_INDICATOR',
 }
 STATUS_MAP = {
   '0': 'active',
@@ -172,10 +173,12 @@ def csv_creds(path, start=None, max=None):
         break
       cred = CRED.copy()
       cred["attributes"] = cred["attributes"].copy()
+      cred["attributes"]["supplier_id"] = str(idx)
       for k, v in FIELD_MAP.items():
         cred["attributes"][k] = row[arg_map[v]]
       cred["attributes"]["status"] = STATUS_MAP.get(cred["attributes"]["status"])
       cred["attributes"]["org_type"] = ORG_TYPE_MAP.get(cred["attributes"]["org_type"])
+      cred["attributes"]["aboriginal_indicator"] = (cred["attributes"]["aboriginal_indicator"] == "1") and "Y" or "N"
       yield cred
 
 async def submit_csv(source, batch_size=None):
@@ -185,7 +188,7 @@ async def submit_csv(source, batch_size=None):
     async def send_one(http_client, cred):
         nonlocal pending
         try:
-            await issue_cred(http_client, cred, cred["attributes"]["legal_entity_id"])
+            await issue_cred(http_client, cred, cred["attributes"]["supplier_id"])
         finally:
             pending -= 1
     async with aiohttp.ClientSession() as http_client:
@@ -203,9 +206,9 @@ async def submit_csv(source, batch_size=None):
                 if not batch:
                     break
                 queue.append(asyncio.ensure_future(
-                    issue_cred_batch(
-                        http_client, batch, batch[0]["attributes"]["legal_entity_id"]
-                    )
+                    limiter(issue_cred_batch(
+                        http_client, batch, batch[0]["attributes"]["supplier_id"]
+                    ))
                 ))
             await asyncio.wait(queue)
         else:
@@ -217,7 +220,7 @@ async def submit_csv(source, batch_size=None):
                         break
                     pending += 1
                     last = cred
-                    asyncio.ensure_future(send_one(http_client, cred))
+                    asyncio.ensure_future(limiter(send_one(http_client, cred)))
                 if not pending:
                     break
                 await asyncio.sleep(0.01)
@@ -227,5 +230,5 @@ async def submit_csv(source, batch_size=None):
     if SERVED_BY:
         print('Served by: {}'.format(SERVED_BY))
 
-src = csv_creds(args.csv, 100, 100)
+src = csv_creds(args.csv, args.start, args.max)
 asyncio.get_event_loop().run_until_complete(submit_csv(src, args.batch))
